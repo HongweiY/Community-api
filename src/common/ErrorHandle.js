@@ -8,6 +8,7 @@ export default (ctx, next) => {
       }
     } else {
       ctx.status = err.status || 500
+      console.log(err)
       ctx.body = {
         code: 500,
         msg: err.msg

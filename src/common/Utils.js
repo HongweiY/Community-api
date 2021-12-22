@@ -1,23 +1,22 @@
-import {getValue} from "../config/RedisConfig";
+import { getValue } from '../config/RedisConfig'
 
 const checkCode = async (key, value) => {
-    let code = ''
+  let code = ''
 
-    await getValue(key).then((res) => {
-        code = res
-    })
-    if (code !== null) {
-        if (code.toLowerCase() === value.toLowerCase()) {
-            return true
-        } else {
-            return false
-        }
+  await getValue(key).then((res) => {
+    code = res
+  })
+  if (code !== null) {
+    if (code.toLowerCase() === value.toLowerCase()) {
+      return true
     } else {
-        return false
+      return false
     }
-
+  } else {
+    return false
+  }
 }
 
 export {
-    checkCode
+  checkCode
 }

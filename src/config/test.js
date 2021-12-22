@@ -1,7 +1,7 @@
-import {getValue, setValue} from "./RedisConfig";
+import { getValue, setValue } from './RedisConfig'
 
-setValue('imooc','imoooc')
+setValue('imooc', 'imoooc')
 
-getValue('imooc').then((res)=>{
-    console.log(res)
+getValue('imooc').then((res) => {
+  console.log(res)
 })

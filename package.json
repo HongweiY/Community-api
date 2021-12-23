@@ -16,6 +16,7 @@
   "dependencies": {
     "@koa/cors": "^3.0.0",
     "bcrypt": "^5.0.1",
+    "dayjs": "^1.10.7",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
@@ -31,7 +32,6 @@
     "koa-jwt": "^4.0.3",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "moment": "^2.29.1",
     "mongoose": "^6.1.2",
     "nodemailer": "^6.7.2",
     "redis": "^4.0.1",

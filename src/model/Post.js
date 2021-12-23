@@ -1,5 +1,6 @@
 import mongoose from '../config/DBHelpler'
-import moment from 'moment'
+import moment from 'dayjs'
+import dayjs from 'dayjs'
 
 const Schema = mongoose.Schema
 
@@ -36,12 +37,24 @@ PostSchema.statics = {
   getList: function (options, sort, page, limit) {
     return this.find(options)
       .sort({ [sort]: -1 })
-      .skip(page * limit)
+      .skip((page - 1) * limit)
       .limit(limit)
-      . populate({
+      .populate({
         path: 'uid',
-        select: 'nickname'
+        select: 'name isVip pic'
       })
+  },
+  getTopWeek: function () {
+    return this.find(
+      {
+        created: { $gte: dayjs().subtract(7, 'days') }
+      },
+      {
+        answer: 1,
+        title: 1
+      }
+    ).sort({ answer: -1 })
+      .limit(15)
   }
 }
 

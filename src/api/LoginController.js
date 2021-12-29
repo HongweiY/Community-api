@@ -5,6 +5,8 @@ import config from '../config/index'
 import { checkCode } from '../common/Utils'
 import User from '../model/User'
 import bcrypt from 'bcrypt'
+import SignRecord from '../model/SignRecord'
+import dayjs from 'dayjs'
 
 class LoginController {
   async forget (ctx) {
@@ -51,9 +53,24 @@ class LoginController {
         userCheck = true
       }
       if (userCheck) {
-        const token = jsonwebtoken.sign({ _id: 'YHW' }, config.JWT_SECRET, { expiresIn: '24h' })
+        const userInfo = user.toJSON()
+        const delInfo = ['username', 'password', 'mobile', 'roles']
+        delInfo.map((item) => {
+          return delete userInfo[item]
+        })
+
+        const token = jsonwebtoken.sign({ _id: userInfo._id }, config.JWT_SECRET, { expiresIn: '24h' })
+        userInfo.sign = false
+        const signRecord = await SignRecord.findOne({
+          uid: userInfo._id
+        }).sort({ created: -1 })
+        if (signRecord !== null && dayjs(signRecord.created).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD')) {
+          userInfo.sign = true
+          userInfo.lastSign = signRecord.created
+        }
         ctx.body = {
           code: 200,
+          data: userInfo,
           token: token
         }
       } else {
